@@ -10,6 +10,11 @@ const AuthLayout = () => {
           <Outlet />
         </section>
       )}
+      <img
+        src="/assets/images/zergram.png"
+        alt="logo"
+        className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
+      />
     </>
   );
 };
