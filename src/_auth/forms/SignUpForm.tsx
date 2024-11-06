@@ -12,25 +12,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { signupValidation } from "@/lib/validation";
 
 const SignUpForm = () => {
-  const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    password: z.string().min(2, {
-      message: "Password must be at least 6 characters.",
-    }),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signupValidation>>({
+    resolver: zodResolver(signupValidation),
     defaultValues: {
       username: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof signupValidation>) {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }

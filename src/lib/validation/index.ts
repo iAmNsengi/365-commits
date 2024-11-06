@@ -1,5 +1,10 @@
 import * as z from "zod";
 
-export const signupValidationSchema = z.object({
-  username: z.string().min(2).max(50),
+export const signupValidation = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  password: z.string().min(2, {
+    message: "Password must be at least 6 characters.",
+  }),
 });
