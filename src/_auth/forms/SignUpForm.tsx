@@ -30,7 +30,8 @@ const SignUpForm = () => {
     console.log(values);
   }
   return (
-    <div>
+    <div className="w-2/3">
+      <h2 className="text-center  py-20 -mt-20 font-bold text-2xl">Sign Up</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
