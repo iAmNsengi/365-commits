@@ -19,6 +19,9 @@ const SignUpForm = () => {
     resolver: zodResolver(signupValidation),
     defaultValues: {
       username: "",
+      name: "",
+      password: "",
+      email: "",
     },
   });
 
@@ -38,6 +41,19 @@ const SignUpForm = () => {
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Name..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>E-mail</FormLabel>
+                <FormControl>
+                  <Input placeholder="user@mail.com" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
