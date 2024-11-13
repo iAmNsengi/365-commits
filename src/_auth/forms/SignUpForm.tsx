@@ -39,6 +39,7 @@ const SignUpForm = () => {
                 <FormControl>
                   <Input placeholder="Name..." {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
