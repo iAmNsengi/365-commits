@@ -1,8 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import compression from "compression";
 
 import appRoutes from "./routes/index.js";
 import { mongodbConnection } from "./config/connectDb.js";
+import { errorResponse } from "./utils/responseHandler.js";
 
 dotenv.config();
 const app = new express();
@@ -10,8 +13,11 @@ const app = new express();
 mongodbConnection();
 
 app.use(express.json());
+app.use(helmet());
+app.use(compression());
 
 app.use(appRoutes);
+app.use(errorResponse);
 
 const PORT = process.env.PORT;
 
