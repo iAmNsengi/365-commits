@@ -12,6 +12,18 @@ export const loginLimit = rateLimit({
   legacyHeaders: true,
 });
 
+// limit max 10 signin requests in 5 min
+export const signupLimit = rateLimit({
+  max: 10,
+  windowMs: 5 * 60 * 1000,
+  message: {
+    success: false,
+    message: "Too many signup attempts, try again after 5 minutes",
+  },
+  standardHeaders: true,
+  legacyHeaders: true,
+});
+
 // limit 100 requests from IP in 15 minutes
 export const reqLimit = rateLimit({
   max: 100,
