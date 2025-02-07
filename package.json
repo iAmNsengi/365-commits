@@ -1,0 +1,20 @@
+{
+  "name": "end-to-end",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iAmNsengi/end-to-end-encryption.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iAmNsengi/end-to-end-encryption/issues"
+  },
+  "homepage": "https://github.com/iAmNsengi/end-to-end-encryption#readme",
+  "description": ""
+}
