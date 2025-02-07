@@ -15,12 +15,9 @@ export const loginController = catchAsync(async (req, res, next) => {
   if (!userWithPasswordExists)
     return next(new AppError("UnAuthorized, user not found", 401));
   user.password = undefined;
-  const token = generateToken(
-    { id: user._id, username: user.username },
-    res
-  ).token;
+  const token = generateToken({ id: user._id, username: user.username }, res);
 
-  return successResponse(res, 200, { token, ...user });
+  return successResponse(res, 200, { user, token });
 });
 
 export const signUpController = catchAsync(async (req, res, next) => {
