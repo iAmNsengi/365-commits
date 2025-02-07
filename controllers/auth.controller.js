@@ -19,3 +19,16 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+export const signUpController = async (req, res) => {
+  try {
+  } catch (error) {
+    console.error(`Error occurred in login controller, ${error.message}`);
+    return res.status(500).json({
+      success: false,
+      message:
+        error?.message ||
+        `An internal server errror occurred in login Controller`,
+    });
+  }
+};
