@@ -21,10 +21,11 @@ export const loginController = catchAsync(async (req, res, next) => {
 });
 
 export const signUpController = catchAsync(async (req, res, next) => {
+  validateRequest(req, res);
   const { username, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await User.create({ username, password: hashedPassword });
   newUser.password = undefined;
-  const token = generateToken({ id: newUsers._id, username: newUser.username });
-  return successResponse(res, 200, { token, ...newUser });
+  const token = generateToken({ id: newUser._id, username: newUser.username });
+  return successResponse(res, 200, { token, user: newUser });
 });
