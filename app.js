@@ -6,6 +6,7 @@ import compression from "compression";
 import appRoutes from "./routes/index.js";
 import { mongodbConnection } from "./config/connectDb.js";
 import { errorResponse } from "./utils/responseHandler.js";
+import { reqLimit } from "./utils/rateLimits.js";
 
 dotenv.config();
 const app = new express();
@@ -15,6 +16,8 @@ mongodbConnection();
 app.use(express.json());
 app.use(helmet());
 app.use(compression());
+
+app.use(reqLimit);
 
 app.use(appRoutes);
 app.use(errorResponse);
