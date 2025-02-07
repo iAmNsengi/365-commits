@@ -3,8 +3,11 @@ import User from "../models/User.js";
 import AppError from "../utils/appError.js";
 import bcrypt from "bcryptjs";
 import { successResponse } from "../utils/responseHandler.js";
+import generateToken from "../utils/auth/generateToken.js";
+import validateRequest from "../utils/validators/validateRequest.js";
 
 export const loginController = catchAsync(async (req, res, next) => {
+  validateRequest(req, res);
   const { username, password } = req.body;
   const user = await User.findOne({ username: username }).select("+password");
   if (!user) return next(new AppError("UnAuthorized, user not found", 401));
@@ -12,7 +15,12 @@ export const loginController = catchAsync(async (req, res, next) => {
   if (!userWithPasswordExists)
     return next(new AppError("UnAuthorized, user not found", 401));
   user.password = undefined;
-  return successResponse(res, 200, user);
+  const token = generateToken(
+    { id: user._id, username: user.username },
+    res
+  ).token;
+
+  return successResponse(res, 200, { token, ...user });
 });
 
 export const signUpController = catchAsync(async (req, res, next) => {
@@ -20,5 +28,6 @@ export const signUpController = catchAsync(async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await User.create({ username, password: hashedPassword });
   newUser.password = undefined;
-  return successResponse(res, 200, newUser);
+  const token = generateToken({ id: newUsers._id, username: newUser.username });
+  return successResponse(res, 200, { token, ...newUser });
 });
