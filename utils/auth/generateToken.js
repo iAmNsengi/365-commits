@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { errorResponse } from "../responseHandler.js";
 
 const generateToken = (data, res) => {
   try {
@@ -7,11 +8,7 @@ const generateToken = (data, res) => {
     });
     return token;
   } catch (error) {
-    return res.status(500).json({
-      message:
-        error?.message ||
-        "An internal server error occurred generating token, try logging in agin!",
-    });
+    return errorResponse(error, "", res);
   }
 };
 
