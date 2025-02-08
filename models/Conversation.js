@@ -12,10 +12,16 @@ const conversationSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    message: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
+    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
   },
   { timestamps: true }
 );
+
+conversationSchema.index({ sender: 1 });
+
+conversationSchema.methods.getMyConversations = function (id) {
+  return this.model("Conversation").find({ $or: { sender: id, receiver: id } });
+};
 
 const Conversation = mongoose.model("Conversation", conversationSchema);
 
