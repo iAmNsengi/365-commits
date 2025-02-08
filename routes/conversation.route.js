@@ -1,4 +1,11 @@
 import express from "express";
+import {
+  createNewConversation,
+  deleteConversation,
+  deleteMessageInConversation,
+  getAllConversations,
+  getConversationMessages,
+} from "../controllers/conversation.controller.js";
 
 const router = express.Router();
 
