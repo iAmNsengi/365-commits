@@ -1,10 +1,4 @@
 import { body } from "express-validator";
-import RegexCraft from "regexcraft";
-
-const passwordValidator = new RegexCraft()
-  .hasMinLength(6)
-  .hasUpperCase(1)
-  .hasNumber(1);
 
 export const validateSignup = [
   body()
@@ -21,16 +15,16 @@ export const validateSignup = [
   body("username")
     .notEmpty()
     .withMessage("username field is required")
-    .matches(/^[a-zA-Z0-9]+$/)
+    .matches(/^[a-zA-Z0-9]{4,20}$/)
     .withMessage(
-      "Username should have at least 4 characters, and only numbers and letters are allowed"
+      "Username should have at least 4 characters and max 20 characters, and only numbers and letters are allowed"
     ),
   body("password")
     .notEmpty()
     .withMessage("password field is required")
     .trim()
-    .matches(passwordValidator.build())
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&_]).{6,}$/)
     .withMessage(
-      "Password should have at least 6 characters, at least one uppercase, one number and one special character"
+      "Password should have at least 6 characters, at least one uppercase, one number and one special character allowed characters: !@#$%^&_"
     ),
 ];
