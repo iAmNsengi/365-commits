@@ -56,6 +56,16 @@ if (cluster.isPrimary) {
         }
       }
     });
+
+    socket.on("sendMessage", ({ senderId, receiverId, encryptedMessage }) => {
+      const receiverSocketId = onlineUsers[receiverId];
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("receiverMessage", {
+          senderId,
+          encryptedMessage,
+        });
+      }
+    });
   });
 
   mongodbConnection();
