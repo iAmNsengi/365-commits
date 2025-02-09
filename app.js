@@ -6,6 +6,8 @@ import mongoSanitize from "express-mongo-sanitize";
 import cors from "cors";
 import cluster from "cluster";
 import os from "os";
+import http from "http";
+import { Server } from "socket.io";
 
 import appRoutes from "./routes/index.js";
 import { mongodbConnection } from "./config/connectDb.js";
@@ -32,6 +34,29 @@ if (cluster.isPrimary) {
   // Workers can share any TCP connection
   // In this case, it is an HTTP server
   const app = express();
+
+  const server = http.createServer(app);
+  const io = new Server(server);
+  const onlineUsers = {};
+
+  io.on("connection", (socket) => {
+    console.log(`A new user got connected`);
+
+    socket.on("userOnline", (userId) => {
+      onlineUsers[userId] = socket.id;
+      console.log(`User ${userId} is online`);
+    });
+
+    socket.on("disconnect", () => {
+      for (const [userId, socketId] of Object.entries(onlineUsers)) {
+        if (socketId === socket.id) {
+          delete onlineUsers[userId];
+          console.log(`User ${userId} went offline`);
+          break;
+        }
+      }
+    });
+  });
 
   mongodbConnection();
 
